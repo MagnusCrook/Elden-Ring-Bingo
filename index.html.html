@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tarnished Bingo – Elden Ring Challenge Cards</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;700&family=Spectral:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#121110;--panel:#1b1916;--line:#33302a;--ink:#e6dfd0;--dim:#9a917f;--gold:#c9a45c;--gold-d:#6b5628;--red:#b5483a;--off:270px;color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:radial-gradient(ellipse at 50% -10%,#2a2318 0,var(--bg) 55%) fixed,var(--bg);color:var(--ink);font:400 16px/1.55 Spectral,Georgia,serif;min-height:100vh}
+main{max-width:1000px;margin:0 auto;padding:14px 16px 64px}
+h1,h2{font-family:"Cormorant Garamond",Georgia,serif;font-weight:700;margin:0;letter-spacing:.02em}
+h1{font-size:clamp(1.6rem,4vw,2.4rem);color:var(--gold);line-height:1.05}
+h2{font-size:1.5rem;color:var(--ink)}
+.sub{color:var(--dim);margin:6px auto 24px;max-width:60ch}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer;background:var(--panel);border:1px solid var(--line);padding:8px 16px;border-radius:3px}
+button:hover{border-color:var(--gold-d)}
+button:focus-visible,input:focus-visible,.cell:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+button.primary{background:var(--gold);color:#1a1409;border-color:var(--gold);font-weight:500}
+button.primary:hover{background:#dab76f}
+.tabs{display:flex;justify-content:safe center;gap:0;margin-bottom:6px;border-bottom:1px solid var(--line);overflow-x:auto}
+.tabs button{background:none;border:0;border-bottom:2px solid transparent;border-radius:0;padding:10px 18px;color:var(--dim);font-family:"Cormorant Garamond",Georgia,serif;font-size:1.25rem;font-weight:700;white-space:nowrap}
+.tabs button[aria-selected=true]{color:var(--gold);border-bottom-color:var(--gold)}
+.bar{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:10px}
+.status{color:var(--dim);flex-basis:100%;text-align:center;min-height:1.5em}
+.status.win{color:var(--gold);font-weight:500}
+.grid{width:var(--b);margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr);gap:4px}
+.cell{aspect-ratio:1;display:flex;align-items:center;justify-content:center;text-align:center;padding:3px;background:var(--panel);border:1px solid var(--line);border-radius:2px;font-size:clamp(.6rem,calc(var(--b) * .027),1rem);line-height:1.2;overflow:hidden;cursor:pointer;user-select:none;overflow-wrap:anywhere;hyphens:auto}
+.cell:hover{border-color:var(--gold-d)}
+.cell{position:relative}
+.cell.p1{background:#2b2312;border-color:var(--gold);color:var(--gold)}
+.cell.p2{background:#122229;border-color:#5fa8b8;color:#8fcad8}
+.cell.p1::after,.cell.p2::after{position:absolute;top:2px;right:5px;font-size:.7rem;font-weight:500}
+.cell.p1::after{content:"1"}
+.cell.p2::after{content:"2"}
+.cell.p2.line{box-shadow:0 0 0 1px #5fa8b8,0 0 14px rgba(95,168,184,.35)}
+.cell.line{box-shadow:0 0 0 1px var(--gold),0 0 14px rgba(201,164,92,.35)}
+.cell.free{font-family:"Cormorant Garamond",Georgia,serif;font-weight:700;font-size:clamp(.7rem,2.6vw,1.05rem);color:var(--gold)}
+section{margin:48px auto 0;max-width:720px;text-align:center}
+.empty{color:var(--dim);font-style:italic}
+.lists{display:grid;gap:14px}
+.add{display:flex;gap:8px;margin:12px 0}
+.add input{flex:1;min-width:0;background:#0e0d0c;border:1px solid var(--line);padding:8px 12px;border-radius:3px}
+ul.items{text-align:left;list-style:none;margin:0;padding:0;max-height:340px;overflow-y:auto;border:1px solid var(--line);border-radius:3px;background:var(--panel)}
+ul.items li{display:flex;gap:10px;align-items:center;justify-content:space-between;padding:7px 12px;border-bottom:1px solid var(--line)}
+ul.items li:last-child{border-bottom:0}
+ul.items button{padding:2px 10px;color:var(--dim);flex:none}
+ul.items button:hover{color:var(--red);border-color:var(--red)}
+.count{color:var(--dim);font-size:.9rem}
+.count.low{color:var(--red)}
+.saved{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,230px));justify-content:center;gap:14px;margin-top:14px}
+.sv{background:var(--panel);border:1px solid var(--line);border-radius:3px;padding:12px}
+.sv .mini{display:grid;grid-template-columns:repeat(5,1fr);gap:2px;margin:8px 0 10px}
+.sv .mini i{aspect-ratio:1;background:#2a2722;display:block}
+.sv .mini i.p1{background:var(--gold)}.sv .mini i.p2{background:#5fa8b8}
+.sv strong{font-family:"Cormorant Garamond",Georgia,serif;font-size:1.15rem;display:block}
+.sv small{color:var(--dim)}
+.sv .row{display:flex;justify-content:center;gap:8px}
+.sv .row button{padding:4px 12px;font-size:.9rem}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--gold);color:#1a1409;padding:8px 18px;border-radius:3px;opacity:0;pointer-events:none;transition:opacity .2s}
+.toast.show{opacity:1}
+.modal{position:fixed;inset:0;z-index:20;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(8,7,6,.8)}
+.modal[hidden]{display:none}
+.box{--c:var(--gold);width:min(420px,100%);text-align:center;padding:40px 28px 30px;background:linear-gradient(180deg,#221d13,var(--panel));border:1px solid var(--c);border-radius:3px;box-shadow:0 0 60px rgba(0,0,0,.7),0 0 40px color-mix(in srgb,var(--c) 25%,transparent);animation:pop .45s cubic-bezier(.2,.9,.3,1.2)}
+.box.p2{--c:#5fa8b8;background:linear-gradient(180deg,#14242b,var(--panel))}
+.box h2{font-size:clamp(2.4rem,9vw,3.4rem);color:var(--c);line-height:1}
+.box .rule{height:1px;margin:18px auto;width:70%;background:linear-gradient(90deg,transparent,var(--c),transparent)}
+.box p{margin:0 0 24px;color:var(--ink)}
+.box button{background:var(--c);border-color:var(--c);color:#14100a;font-weight:500}
+@keyframes pop{from{opacity:0;transform:scale(.85) translateY(10px)}to{opacity:1;transform:none}}
+.top{display:flex;align-items:center;justify-content:center;gap:4px 32px;flex-wrap:wrap;margin-bottom:4px}
+.nav{display:flex;gap:4px}
+#v-play{--b:min(968px,100vw - 32px,100dvh - var(--off))}
+#v-play>.tabs,#v-play>.bar,#v-play>.hint{width:var(--b);margin-left:auto;margin-right:auto}
+.nav a{color:var(--dim);text-decoration:none;padding:4px 12px;border-bottom:2px solid transparent;font:700 1.2rem "Cormorant Garamond",Georgia,serif}
+.nav a[aria-current=page]{color:var(--gold);border-bottom-color:var(--gold)}
+.nav a:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.hint{color:var(--dim);font-size:.85rem;text-align:center;margin:8px 0 0}
+.rules{max-width:66ch;margin:0 auto;text-align:center}
+.rules h2{margin:34px 0 8px;color:var(--gold);font-size:1.7rem}
+.rules h2:first-child{margin-top:20px;font-size:2.3rem}
+.rules p,.rules li{margin:0 0 12px}
+.rules ol{display:inline-block;text-align:left;padding-left:1.3em;margin:0 0 12px}
+.callout{border:1px solid var(--gold-d);padding:10px 16px;margin:16px 0;text-align:center}
+.callout p{margin:0}
+@media (max-width:600px){:root{--off:320px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<main>
+<header class="top"><h1>Tarnished Bingo</h1><nav class="nav" aria-label="Pages"><a href="#play" id="n-play">Play</a><a href="#rules" id="n-rules">Rules</a></nav></header>
+<div id="v-play">
+
+
+<div class="tabs" role="tablist" id="tabs"></div>
+
+<div class="bar">
+  <button class="primary" id="gen">Generate card</button>
+  <button id="save">Save card</button>
+  <button id="clear">Clear marks</button>
+  <span class="status" id="status"></span>
+</div>
+<div class="grid" id="grid" aria-label="Bingo card"></div>
+<p class="hint">Click a square to mark it gold, click again for blue, and a third time to clear it. Each square can belong to only one player.</p>
+
+<section>
+  <h2>Saved cards</h2>
+  <div class="saved" id="saved"></div>
+</section>
+
+<section>
+  <h2 id="ph">Challenge pool</h2>
+  <p class="sub" id="pdesc"></p>
+  <div class="add">
+    <input id="newc" type="text" placeholder="Add a challenge to this pool" maxlength="80" aria-label="New challenge">
+    <button id="addb">Add</button>
+  </div>
+  <div class="bar"><span class="count" id="cnt"></span><button id="reset">Restore default pool</button></div>
+  <ul class="items" id="items"></ul>
+</section>
+</div>
+<div id="v-rules" class="rules" hidden>
+<h2>How Elden Ring Bingo works</h2>
+<p>Two players race through Elden Ring at the same time, trying to complete the challenges on a shared 5×5 bingo card. The first to complete a line wins.</p>
+<h2>Setting up</h2>
+<ol>
+<li>On the Play page, choose Early game, Midgame or Late game and press Generate card until you both like the board. You can edit the challenge pools first if you want to tailor them.</li>
+<li>Once the card is chosen, each player starts a new playthrough of Elden Ring.</li>
+<li>As you complete challenges, mark them on the card. Gold is player 1 and blue is player 2.</li>
+</ol>
+<h2>The goal</h2>
+<p>Be the first player to mark five squares in a row, whether across, down or diagonally. That is a bingo, and it wins the game.</p>
+<h2>The catch</h2>
+<div class="callout"><p>If the other player has marked a square, you can’t mark that square for yourself.</p></div>
+<p>Every square belongs to whoever completes it first, so shared challenges become a race. Claiming a square also blocks the lines your opponent was building through it.</p>
+<h2>If nobody gets a bingo</h2>
+<p>If neither player can complete a line, keep playing and claim as many squares as you can. The game only ends on count once every square has been marked by one player or the other, and then the winner is whoever has marked the most squares. A tied count is a draw, so settle it with a rematch.</p>
+
+
+<h2>Using this site</h2>
+<p>The site announces bingos and finished games with a pop-up. You can save cards you like and reopen them later, and add or remove challenges in each phase’s pool.</p>
+<p><button class="primary" id="goplay">Start a game</button></p>
+</div>
+</main>
+<div class="modal" id="modal" hidden role="dialog" aria-modal="true" aria-labelledby="mt"><div class="box" id="box"><h2 id="mt">Bingo!</h2><div class="rule"></div><p id="mp"></p><button id="mx">Keep playing</button></div></div>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+const PHASES={
+early:{name:"Early game",desc:"Limgrave, Weeping Peninsula, Stormveil and the road to Liurnia.",list:[
+"Defeat Margit, the Fell Omen","Defeat Godrick the Grafted","Defeat the Tree Sentinel","Defeat Grafted Scion","Defeat Flying Dragon Agheel","Defeat Crucible Knight (Stormhill)","Defeat Soldier of Godrick","Defeat Bell Bearing Hunter","Defeat Beastman of Farum Azula","Defeat Leonine Misbegotten","Defeat Erdtree Burial Watchdog","Defeat Night’s Cavalry","Defeat Demi-Human Chief","Defeat Patches","Clear Stormveil Castle","Clear Limgrave Tunnels","Clear Murkwater Catacombs","Clear Fringefolk Hero’s Grave","Clear Coastal Cave","Reach level 20","Reach Roundtable Hold","Light 10 Sites of Grace","Open 3 Spirit Springs","Ride Torrent across the Bridge of Sacrifice","Summon a spirit ash","Upgrade a weapon to +3","Buy a Smithing Stone from a merchant","Obtain a Crimson Flask upgrade","Find a Talisman Pouch slot","Win a duel with Blaidd","Collect 5 Golden Seeds","Kill a Giant Crab","Kill a Land Octopus","Find the Waypoint Ruins key","Complete the Gatefront Ruins","Defeat Ghostflame Dragon (Weeping)","Defeat Cleanrot Knight","Use a Spiritcall on a boss"]},
+mid:{name:"Midgame",desc:"Liurnia, Caelid, Altus Plateau and the Mountaintops approach.",list:[
+"Defeat Rennala, Queen of the Full Moon","Defeat Starscourge Radahn","Defeat Rykard, Lord of Blasphemy","Defeat Godfrey, First Elden Lord","Defeat Magma Wyrm Makar","Defeat Dragonkin Soldier of Nokstella","Defeat Mimic Tear","Defeat Godskin Apostle","Defeat Red Wolf of Radagon","Defeat Elemer of the Briar","Defeat Astel, Naturalborn of the Void","Defeat Black Knife Assassin","Defeat Draconic Tree Sentinel","Defeat Fia’s Champions","Defeat Ancestor Spirit","Clear Raya Lucaria Academy","Clear Volcano Manor","Clear Leyndell outskirts","Clear Caria Manor","Clear Sellia Crystal Tunnel","Complete Ranni’s questline step","Join the Volcano Manor","Reach Siofra River","Reach level 60","Light 30 Sites of Grace","Upgrade a weapon to +10","Use Rune Arc","Obtain a Remembrance","Obtain a Dragon Heart","Collect 3 Great Runes","Cross the Gelmir Hero’s Grave","Defeat a Fallingstar Beast","Ride the Spiritspring on the Altus Plateau","Defeat Tibia Mariner","Find the Carian study hall secret","Fast travel to Mohgwyn"]},
+late:{name:"Late game",desc:"Leyndell, Mountaintops, Haligtree, Farum Azula and the Elden Throne.",list:[
+"Defeat Morgott, the Omen King","Defeat Mohg, Lord of Blood","Defeat Malenia, Blade of Miquella","Defeat Maliketh, the Black Blade","Defeat Godfrey, First Elden Lord (Hoarah Loux)","Defeat Radagon of the Golden Order","Defeat Elden Beast","Defeat Fire Giant","Defeat Placidusax","Defeat Dragonlord Placidusax","Defeat Godskin Duo","Defeat Loretta, Knight of the Haligtree","Defeat Commander Niall","Defeat Regal Ancestor Spirit","Defeat Sir Gideon Ofnir","Defeat Lichdragon Fortissax","Defeat Ancient Dragon Lansseax","Defeat Borealis the Freezing Fog","Defeat Great Wyrm Theodorix","Clear Crumbling Farum Azula","Clear Miquella’s Haligtree","Clear Elphael","Clear the Subterranean Shunning-Grounds","Reach level 120","Reach Mt. Gelmir ending","Upgrade a weapon to +25","Light 60 Sites of Grace","Collect all 7 Great Runes","Burn the Erdtree","Obtain a Remembrance of the Blasphemous","Obtain a Mohg’s Great Rune","Complete Fia’s questline","Complete Hyetta’s questline","Reach the Mountaintops of the Giants","Reach the Consecrated Snowfield","Complete a boss without taking damage","Finish the game without leveling vigor","Defeat a boss using only a spirit ash"]}
+};
+const FREE="Rest at a Site of Grace";
+const LS={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const $=id=>document.getElementById(id);
+const dflt=()=>Object.fromEntries(Object.entries(PHASES).map(([k,p])=>[k,[...new Set(p.list)]]));
+let lists=LS.get("erb:lists",null)||dflt();
+for(const k in PHASES) if(!Array.isArray(lists[k])) lists[k]=[...PHASES[k].list];
+let saved=LS.get("erb:saved",[]).map(c=>({...c,marks:c.marks.map((m,i)=>c.card[i]===FREE?0:(m===true?1:m||0))}));
+let phase="early", card=null, marks=Array(25).fill(0), celebrated=[0,0,0];
+
+function toast(t){const e=$("toast");e.textContent=t;e.classList.add("show");clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove("show"),1800)}
+function persist(){LS.set("erb:lists",lists);LS.set("erb:saved",saved)}
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
+
+function renderTabs(){
+  $("tabs").innerHTML=Object.entries(PHASES).map(([k,p])=>`<button role="tab" data-p="${k}" aria-selected="${k===phase}">${p.name}</button>`).join("");
+  $("tabs").querySelectorAll("button").forEach(b=>b.onclick=()=>{phase=b.dataset.p;renderTabs();renderPool();generate()});
+}
+function generate(){
+  const pool=lists[phase];
+  if(pool.length<25){toast("Add at least 25 challenges to this pool");card=null;renderGrid();return}
+  const a=[...pool];
+  for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}
+  card=a.slice(0,25);celebrated=[0,0,0];
+  marks=Array(25).fill(0);
+  renderGrid();
+}
+const LINES=(()=>{const L=[];for(let i=0;i<5;i++){L.push([0,1,2,3,4].map(c=>i*5+c));L.push([0,1,2,3,4].map(r=>r*5+i))}L.push([0,6,12,18,24],[4,8,12,16,20]);return L})();
+function renderGrid(){
+  const g=$("grid");
+  if(!card){g.innerHTML='<p class="empty" style="grid-column:1/-1">This pool has fewer than 25 challenges. Add more below to generate a card.</p>';$("status").textContent="";return}
+  const w1=LINES.filter(l=>l.every(i=>marks[i]===1)),w2=LINES.filter(l=>l.every(i=>marks[i]===2)),won=[...w1,...w2],inLine=new Set(won.flat());
+  g.innerHTML=card.map((t,i)=>`<div class="cell${marks[i]?" p"+marks[i]:""}${inLine.has(i)?" line":""}" role="button" tabindex="0" aria-label="${esc(t)}: ${["unmarked","marked by player 1","marked by player 2"][marks[i]]}" data-i="${i}">${esc(t)}</div>`).join("");
+  const n1=marks.filter(m=>m===1).length,n2=marks.filter(m=>m===2).length;
+  $("status").className="status"+(won.length||result()?" win":"");
+  $("status").textContent=(w1.length?"Gold bingo! ":"")+(w2.length?"Blue bingo! ":"")+`Gold ${n1} · Blue ${n2}`+(result()?(result().w?` · ${result().w===1?"Gold":"Blue"} wins on count`:" · Draw"):"");
+}
+function toggle(i){if(!card)return;marks[i]=(marks[i]+1)%3;renderGrid();const e=$("grid").querySelector(`[data-i="${i}"]`);if(e)e.focus();checkBingo()}
+const hasLine=p=>LINES.some(l=>l.every(i=>marks[i]===p));
+const canWin=p=>LINES.some(l=>l.every(i=>marks[i]!==3-p));
+function result(){
+  if(!card||hasLine(1)||hasLine(2))return null;
+  if(!marks.every(Boolean))return null;const full=true;
+  
+  const n1=marks.filter(m=>m===1).length,n2=marks.filter(m=>m===2).length;
+  return{full,n1,n2,w:n1>n2?1:n2>n1?2:0};
+}
+function sync(){[1,2].forEach(p=>celebrated[p]=hasLine(p)?1:0);celebrated[0]=result()?1:0}
+function checkBingo(){for(const p of [1,2]){const h=hasLine(p);if(h&&!celebrated[p])celebrate(p);celebrated[p]=h?1:0}const r=result();if(r&&!celebrated[0])endGame(r);celebrated[0]=r?1:0}
+function celebrate(p){
+  $("box").className="box p"+p;$("mt").textContent="Bingo!";$("mx").textContent="Keep playing";
+  $("mp").textContent=p===1?"Player 1 (gold) has completed a line.":"Player 2 (blue) has completed a line.";
+  $("modal").hidden=false;$("mx").focus();
+}
+function endGame(r){
+  $("box").className="box"+(r.w?" p"+r.w:"");
+  $("mt").textContent=r.w?(r.w===1?"Gold wins":"Blue wins"):"A draw";
+  $("mp").textContent="Every square is claimed."+` Final count: gold ${r.n1}, blue ${r.n2}.`+(r.w?"":" The count is tied.");
+  $("mx").textContent="Close";
+  $("modal").hidden=false;$("mx").focus();
+}
+function closeModal(){if($("modal").hidden)return;$("modal").hidden=true;const c=$("grid").querySelector(".cell");if(c)c.focus()}
+$("mx").onclick=closeModal;
+$("modal").onclick=e=>{if(e.target===$("modal"))closeModal()};
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModal()});
+$("grid").onclick=e=>{const c=e.target.closest(".cell");if(c)toggle(+c.dataset.i)};
+$("grid").onkeydown=e=>{if(e.key==="Enter"||e.key===" "){const c=e.target.closest(".cell");if(c){e.preventDefault();toggle(+c.dataset.i)}}};
+$("gen").onclick=generate;
+$("clear").onclick=()=>{if(!card)return;marks=Array(25).fill(0);celebrated=[0,0,0];renderGrid()};
+$("save").onclick=()=>{
+  if(!card){toast("Generate a card first");return}
+  saved.unshift({id:Date.now(),phase,card:[...card],marks:[...marks],at:new Date().toLocaleDateString("en-GB")});
+  persist();renderSaved();toast("Card saved");
+};
+function renderSaved(){
+  const s=$("saved");
+  if(!saved.length){s.innerHTML='<p class="empty">No saved cards yet. Generate one you like and choose Save card.</p>';return}
+  s.innerHTML=saved.map(c=>`<div class="sv"><strong>${PHASES[c.phase].name}</strong><small>Saved ${c.at}</small>
+  <div class="mini">${c.marks.map(m=>`<i class="${m?"p"+m:""}"></i>`).join("")}</div>
+  <div class="row"><button data-load="${c.id}">Open</button><button data-del="${c.id}">Delete</button></div></div>`).join("");
+}
+$("saved").onclick=e=>{
+  const l=e.target.dataset.load,d=e.target.dataset.del;
+  if(l){const c=saved.find(x=>x.id==l);if(c){phase=c.phase;card=[...c.card];marks=[...c.marks];sync();renderTabs();renderPool();renderGrid();window.scrollTo({top:0,behavior:"smooth"})}}
+  if(d){saved=saved.filter(x=>x.id!=d);persist();renderSaved();toast("Card deleted")}
+};
+function renderPool(){
+  const p=PHASES[phase],list=lists[phase];
+  $("ph").textContent=p.name+" challenge pool";$("pdesc").textContent=p.desc+" The generator picks 25 at random from this list.";
+  $("cnt").textContent=`${list.length} challenges`+(list.length<25?" (25 needed)":"");
+  $("cnt").className="count"+(list.length<25?" low":"");
+  $("items").innerHTML=list.map((t,i)=>`<li><span>${esc(t)}</span><button data-r="${i}" aria-label="Remove ${esc(t)}">Remove</button></li>`).join("")||'<li class="empty">The pool is empty.</li>';
+}
+$("items").onclick=e=>{const r=e.target.dataset.r;if(r!==undefined){lists[phase].splice(+r,1);persist();renderPool()}};
+function add(){
+  const v=$("newc").value.trim();if(!v)return;
+  if(lists[phase].some(x=>x.toLowerCase()===v.toLowerCase())){toast("That challenge is already in the pool");return}
+  lists[phase].unshift(v);$("newc").value="";persist();renderPool();
+}
+$("addb").onclick=add;
+$("newc").onkeydown=e=>{if(e.key==="Enter")add()};
+$("reset").onclick=()=>{lists[phase]=[...new Set(PHASES[phase].list)];persist();renderPool();toast("Default pool restored")};
+
+function route(){const r=location.hash==="#rules";$("v-play").hidden=r;$("v-rules").hidden=!r;$("n-play").setAttribute("aria-current",r?"false":"page");$("n-rules").setAttribute("aria-current",r?"page":"false");window.scrollTo(0,0)}
+window.addEventListener("hashchange",route);
+$("goplay").onclick=()=>{location.hash="#play"};
+renderTabs();renderPool();renderSaved();generate();route();
+</script>
+</body>
+</html>
